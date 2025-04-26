@@ -9,7 +9,7 @@ type FormFieldProps = {
     touched?: boolean
     error?: string
     placeholder: string
-    successMessage: string
+    confirmationMessage: string
 }
 
 const FormField = ({
@@ -20,7 +20,7 @@ const FormField = ({
                        touched,
                        error,
                        placeholder,
-                       successMessage
+                       confirmationMessage
                    }: FormFieldProps) => {
     const autoCompleteProps =
         autoComplete !== undefined
@@ -42,9 +42,9 @@ const FormField = ({
                 placeholder={placeholder}
             />
             <ErrorMessage name={name} component="div" className="error" />
-            {successMessage && (
+            {confirmationMessage && (
                 <ConfirmationMessage
-                    message={successMessage}
+                    message={confirmationMessage}
                     touched={touched}
                     error={error}
                 />

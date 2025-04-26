@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Form, Formik } from 'formik'
 import { object, string } from 'yup'
 import FormField from './FormField'
@@ -34,49 +35,80 @@ const initialValues = {
     phoneNumber: ''
 }
 
-const handleSubmit = (values: typeof initialValues) => {
-    console.log('Form submitted with values:', values)
-}
-
 const randomSuffix = Math.random().toString(36).substring(2, 10)
 
 const HyperspaceForm = () => {
+    // Стан для контролю модального вікна
+    const [isFormSubmitted, setIsFormSubmitted] = useState(false)
+
+    const handleSubmit = (
+        values: typeof initialValues,
+        { resetForm }: { resetForm: () => void }
+    ) => {
+        console.log('Form submitted with values:', values)
+        
+        // Показати модальне вікно
+        setIsFormSubmitted(true)
+        
+        // Очистити форму
+        resetForm()
+    }
+
+    // Функція для закриття модального вікна
+    const closeModal = () => {
+        setIsFormSubmitted(false)
+    }
+
     const fields = [
-        { id: 'firstName', type: 'text', placeholder: 'Enter your first name', successMessage: 'First name is valid' },
-        { id: 'lastName', type: 'text', placeholder: 'Enter your last name', successMessage: 'Last name is valid' },
-        { id: 'workEmail', type: 'email', placeholder: 'Enter your work email', successMessage: 'Work email is valid' },
-        { id: 'jobTitle', type: 'text', placeholder: 'Enter your job title', successMessage: 'Job title is valid' },
-        { id: 'phoneNumber', type: 'text', placeholder: 'Enter your phone number', successMessage: 'Phone number is valid' },
+        { id: 'firstName', type: 'text', placeholder: 'Enter your first name', confirmationMessage: 'First name is valid' },
+        { id: 'lastName', type: 'text', placeholder: 'Enter your last name', confirmationMessage: 'Last name is valid' },
+        { id: 'workEmail', type: 'email', placeholder: 'Enter your work email', confirmationMessage: 'Work email is valid' },
+        { id: 'jobTitle', type: 'text', placeholder: 'Enter your job title', confirmationMessage: 'Job title is valid' },
+        { id: 'phoneNumber', type: 'text', placeholder: 'Enter your phone number', confirmationMessage: 'Phone number is valid' },
     ];
 
     return (
-        <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
-            validateOnMount={true}
-        >
-            {({ errors, touched, isValid }) => (
-                <Form autoComplete="off">
-                    {fields.map(({ id, type, placeholder, successMessage }) => (
-                        <FormField
-                            key={id}
-                            id={`${id}-${randomSuffix}`}
-                            name={id}
-                            type={type}
-                            placeholder={placeholder}
-                            successMessage={successMessage}
-                            touched={touched[id as keyof typeof touched]}
-                            error={errors[id as keyof typeof errors]}
-                        />
-                    ))}
+        <div className="form-container">
+            <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}
+                validateOnMount={true}
+            >
+                {({ errors, touched, isValid }) => (
+                    <Form autoComplete="off">
+                        {fields.map(({ id, type, placeholder, confirmationMessage: confirmationMessage }) => (
+                            <FormField
+                                key={id}
+                                id={`${id}-${randomSuffix}`}
+                                name={id}
+                                type={type}
+                                placeholder={placeholder}
+                                confirmationMessage={confirmationMessage}
+                                touched={touched[id as keyof typeof touched]}
+                                error={errors[id as keyof typeof errors]}
+                            />
+                        ))}
 
-                    <button type="submit" disabled={!isValid}>
-                        Submit
-                    </button>
-                </Form>
+                        <button type="submit" disabled={!isValid} className="submit-button">
+                            Submit
+                        </button>
+                    </Form>
+                )}
+            </Formik>
+
+            {/* Модальне вікно */}
+            {isFormSubmitted && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <p>Form submitted successfully!</p>
+                        <button onClick={closeModal} className="ok-button">
+                            OK
+                        </button>
+                    </div>
+                </div>
             )}
-        </Formik>
+        </div>
     )
 }
 
