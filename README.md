@@ -1,19 +1,23 @@
+
 # 🚀 Hyperspace Registration Form (React + Formik + Yup)
 
 This project is a simple web form demonstration with validation, constructed using **Formik** for form management and **Yup** for validation. It provides a clean, modular structure and offers an easy-to-use registration form with input data handling and validation feedback.
-
 ---
 
 ## 🕉 Key Features
 
-- 📋 Form state and validation management through Formik
-- 🔒 Schema-based validation with Yup
-- 👨‍💻 Three input fields: `First Name`, `Last Name`, `Work Email`, with expandable fields like `Job Title` and `Phone Number`
-- 🧄 Modular structure: `components` for better separation of logic
-- ✅ Easy setup and configuration
-- 🌟 Fully typed with TypeScript
-- 🕶 Accessible design, featuring ARIA attributes and proper error messages
-- ⚡ Full compatibility with modern tools like **Vite**
+- 📋 Form state management using **Formik**
+- ✅ Schema-based validation with **Yup**
+- 🧩 Three primary fields: `First Name`, `Last Name`, `Work Email`
+   + Additional fields: `Job Title`, `Phone Number`
+- 🧠 Modular structure with separate logic in `components`
+- 🔍 Dynamic validation with real-time feedback
+- ⚡ Fully compatible with **Vite**
+- 🎯 **Form resets automatically** after successful submission
+- 🧾 **ConfirmationMessage** component shows per-field validation success messages
+- 🧊 **Modal window** displays success message after submission
+- 🕶 Accessible design with ARIA attributes
+- 🌐 Fully typed using **TypeScript**
 
 ---
 
@@ -89,13 +93,44 @@ This project can be deployed to any static hosting platform such as **Vercel**, 
 ## 🌟 Key Components
 
 1. **FormField.tsx**
-    - Modular field component for handling inputs, errors, and success messages.
+   - Modular field component for handling inputs, errors, and success messages.
 
 2. **HyperspaceForm.tsx**
-    - Main feature: Registration form with validation schema and dynamic rendering of input fields.
+   - Main feature: Registration form with validation schema and dynamic rendering of input fields.
 
 3. **ConfirmationMessage.tsx**
-    - Success message logic is dynamically controlled based on input touch and validation.
+   - Success message logic is dynamically controlled based on input touch and validation.
+
+---
+## ♿ Accessibility Support
+
+Basic accessibility support has been implemented for users who rely on assistive technologies such as screen readers.
+
+### 🔧 Improvements Made:
+
+1. **Each input field includes an `aria-label` attribute**
+    - This allows screen readers to announce descriptive labels without the need for visible `<label>` elements.
+    - The `aria-label` attributes were added without altering the logic or component structure.
+
+2. **No additional functional changes**
+    - Component architecture remains unchanged for consistency and simplicity.
+
+---
+
+### ✅ Accessibility Testing via Google Lighthouse
+
+Google Chrome’s built-in **Lighthouse** tool was used for automated accessibility testing.
+
+#### 🔍 Steps:
+
+1. Open the application in **Google Chrome**.
+2. Press **F12** to open **DevTools**.
+3. Go to the **Lighthouse** tab.
+4. Select the **Accessibility** checkbox.
+5. Click **Generate report**.
+6. Review the results:
+    - If `aria-label` attributes are implemented correctly, no violations will appear.
+    - Suggestions will appear if further enhancements are needed.
 
 ---
 

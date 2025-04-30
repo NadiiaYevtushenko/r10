@@ -10,6 +10,7 @@ type FormFieldProps = {
     error?: string
     placeholder: string
     confirmationMessage: string
+    ariaLabel?: string // Додаємо підтримку ARIA-атрибутів
 }
 
 const FormField = ({
@@ -20,6 +21,7 @@ const FormField = ({
                        touched,
                        error,
                        placeholder,
+                       ariaLabel, // Передаємо значення aria-label
                        confirmationMessage
                    }: FormFieldProps) => {
     const autoCompleteProps =
@@ -40,6 +42,7 @@ const FormField = ({
                 type={type}
                 {...autoCompleteProps}
                 placeholder={placeholder}
+                aria-label={ariaLabel} // Додаємо ARIA-атрибут
             />
             <ErrorMessage name={name} component="div" className="error" />
             {confirmationMessage && (

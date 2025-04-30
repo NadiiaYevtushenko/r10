@@ -38,7 +38,6 @@ const initialValues = {
 const randomSuffix = Math.random().toString(36).substring(2, 10)
 
 const HyperspaceForm = () => {
-    // Стан для контролю модального вікна
     const [isFormSubmitted, setIsFormSubmitted] = useState(false)
 
     const handleSubmit = (
@@ -46,26 +45,51 @@ const HyperspaceForm = () => {
         { resetForm }: { resetForm: () => void }
     ) => {
         console.log('Form submitted with values:', values)
-        
-        // Показати модальне вікно
         setIsFormSubmitted(true)
-        
-        // Очистити форму
         resetForm()
     }
 
-    // Функція для закриття модального вікна
     const closeModal = () => {
         setIsFormSubmitted(false)
     }
 
     const fields = [
-        { id: 'firstName', type: 'text', placeholder: 'Enter your first name', confirmationMessage: 'First name is valid' },
-        { id: 'lastName', type: 'text', placeholder: 'Enter your last name', confirmationMessage: 'Last name is valid' },
-        { id: 'workEmail', type: 'email', placeholder: 'Enter your work email', confirmationMessage: 'Work email is valid' },
-        { id: 'jobTitle', type: 'text', placeholder: 'Enter your job title', confirmationMessage: 'Job title is valid' },
-        { id: 'phoneNumber', type: 'text', placeholder: 'Enter your phone number', confirmationMessage: 'Phone number is valid' },
-    ];
+        {
+            id: 'firstName',
+            type: 'text',
+            placeholder: 'Enter your first name',
+            confirmationMessage: 'First name is valid',
+            ariaLabel: 'Enter your first name'
+        },
+        {
+            id: 'lastName',
+            type: 'text',
+            placeholder: 'Enter your last name',
+            confirmationMessage: 'Last name is valid',
+            ariaLabel: 'Enter your last name'
+        },
+        {
+            id: 'workEmail',
+            type: 'email',
+            placeholder: 'Enter your work email',
+            confirmationMessage: 'Work email is valid',
+            ariaLabel: 'Enter your work email'
+        },
+        {
+            id: 'jobTitle',
+            type: 'text',
+            placeholder: 'Enter your job title',
+            confirmationMessage: 'Job title is valid',
+            ariaLabel: 'Enter your job title'
+        },
+        {
+            id: 'phoneNumber',
+            type: 'text',
+            placeholder: 'Enter your phone number',
+            confirmationMessage: 'Phone number is valid',
+            ariaLabel: 'Enter your phone number (format: +380XXXXXXXXX)'
+        }
+    ]
 
     return (
         <div className="form-container">
@@ -77,7 +101,7 @@ const HyperspaceForm = () => {
             >
                 {({ errors, touched, isValid }) => (
                     <Form autoComplete="off">
-                        {fields.map(({ id, type, placeholder, confirmationMessage: confirmationMessage }) => (
+                        {fields.map(({ id, type, placeholder, confirmationMessage, ariaLabel }) => (
                             <FormField
                                 key={id}
                                 id={`${id}-${randomSuffix}`}
@@ -85,6 +109,7 @@ const HyperspaceForm = () => {
                                 type={type}
                                 placeholder={placeholder}
                                 confirmationMessage={confirmationMessage}
+                                ariaLabel={ariaLabel} // Передаємо атрибут ARIA
                                 touched={touched[id as keyof typeof touched]}
                                 error={errors[id as keyof typeof errors]}
                             />
@@ -97,7 +122,6 @@ const HyperspaceForm = () => {
                 )}
             </Formik>
 
-            {/* Модальне вікно */}
             {isFormSubmitted && (
                 <div className="modal">
                     <div className="modal-content">
